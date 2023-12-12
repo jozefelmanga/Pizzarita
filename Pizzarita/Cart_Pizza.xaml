@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pizzarita.Cart_Pizza"
+                       BackgroundColor="{StaticResource Primary}"
+             x:Name="Cart">
+    <Grid BackgroundColor="#fff1ec">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Pizza list using CollectionView -->
+        <ScrollView Grid.Row="0">
+            <StackLayout>
+                <CollectionView ItemsSource="{Binding CartItems}" SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="1" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Your pizza item layout with enhanced styling -->
+                            <Frame CornerRadius="15" Margin="10" Padding="10" HasShadow="True" BackgroundColor="#fef8f7" HeightRequest="100">
+                                <FlexLayout Direction="Row" JustifyContent="Start" AlignItems="Center">
+                                    <!-- Pizza image -->
+                                    <Image Source="{Binding Pizza.ImageUrl}" Aspect="AspectFill" HeightRequest="80" WidthRequest="80"/>
+
+                                    <!-- Pizza details -->
+                                    <StackLayout Margin="10,5,10,5" HorizontalOptions="Start" FlexLayout.Grow="1">
+                                        
+                                            <!-- Pizza name -->
+                                            <Label Text="{Binding Pizza.Name}" FontSize="Medium" FontAttributes="Bold" TextColor="#333333" LineBreakMode="WordWrap"/>
+                                           
+                                        <StackLayout Orientation="Horizontal" Spacing="5" VerticalOptions="Center">
+                                            <!-- Price -->
+                                            <Label Text="{Binding Pizza.Price, StringFormat='{0:F2} DT'}" FontSize="Small" TextColor="#eb3229"/>
+                                            <!-- Badge for pizza size (moved beside the price) -->
+                                            <Label Text="{Binding Pizza.Size}" FontSize="10" TextColor="White" BackgroundColor="{StaticResource Secondary}" HorizontalOptions="Center" VerticalOptions="Center" Padding="5" />
+                                        </StackLayout>
+                                    </StackLayout>
+
+
+                                    <StackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="5,0">
+                                        <Label Text="{Binding Quantity}" FontSize="Medium" TextColor="#333333"/>
+                                    </StackLayout>
+
+                                    <!-- Delete image -->
+                                    <Image Source="remove" Aspect="AspectFill" HeightRequest="35" WidthRequest="35">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.RemovePizzaCommand, Source={x:Reference Name=Cart}}" CommandParameter="{Binding .}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </FlexLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Total Price Display and Button along with Path at the bottom -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+                <!-- Total Price Display -->
+                <Label x:Name="TotalPriceLabel" Text="{Binding TotalPrice, StringFormat='Total: {0:F2} DT'}" FontSize="Large" FontAttributes="Bold" TextColor="{StaticResource Primary}"
+                       VerticalOptions="Center" HorizontalOptions="Center"/>
+
+                <Button Text="Confirm"
+        CornerRadius="35" HeightRequest="55"
+        FontFamily="BarlowBold" FontSize="22"
+        BackgroundColor="{StaticResource Primary}" Margin="20"
+        Clicked="CompleteOrder"/>
+
+            </StackLayout>
+
+            <!-- Path at the bottom -->
+            <Path Grid.Row="1"
+      Data="M 211.5157012939453 154.91004943847656 L 211.5157012939453 190 L 652.75048828125 190 L 652.75048828125 154.91004943847656 C 506.6836853027344 80 359.6053771972656 78 211.5157012939453 154.91004943847656 Z"
+      Aspect="Fill" Fill="{StaticResource Primary}" Stroke="{StaticResource Primary}"/>
+
+
+        </Grid>
+    </Grid>
+</ContentPage>

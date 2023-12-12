@@ -1,0 +1,87 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pizzarita.MainPage"
+             BackgroundColor="#fff1ec"
+           
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit">
+ <NavigationPage.HasNavigationBar>
+        <OnPlatform x:TypeArguments="x:Boolean">
+            <On Platform="Android, iOS">False</On>
+            <On Platform="Windows">False</On>
+        </OnPlatform>
+    </NavigationPage.HasNavigationBar>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Section -->
+        <Frame Grid.Row="0" CornerRadius="0" BackgroundColor="{StaticResource Primary}" 
+       HasShadow="True" HeightRequest="65" Padding="0, 10" BorderColor="{StaticResource Primary}">
+            <Grid VerticalOptions="CenterAndExpand" HeightRequest="50" Padding="10, 0">
+                <ImageButton Source="shopping_cart" HeightRequest="25" WidthRequest="25" HorizontalOptions="End" Margin="10, 0">
+                    <ImageButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnShoppingCartClicked"/>
+                    </ImageButton.GestureRecognizers>
+                </ImageButton>
+                <Label Text="Pizzarita" HorizontalOptions="Center" FontAttributes="Bold"
+               VerticalOptions="Center" FontSize="20" TextColor="White"/>
+            </Grid>
+        </Frame>
+
+
+        <!-- Content Section -->
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <!-- Special card for the best offer -->
+                <Frame CornerRadius="15" Margin="10" Padding="0" HasShadow="True" BackgroundColor="Bisque" HeightRequest="150">
+                    <Image Source="./Resources/Images/publicity.jpg" Aspect="AspectFill"/>
+                </Frame>
+
+                <!-- Header or any other static elements -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Pizza Menu" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Margin="10,20,0,0"/>
+                    <!--<Image Source="./Resources/Images/add_to_cart.png" Aspect="AspectFit" HeightRequest="30" WidthRequest="30" AbsoluteLayout.LayoutFlags="PositionProportional" Margin="10,20,20,0" Grid.Column="2"/>-->
+                    
+                </Grid>
+
+                <!-- Pizza list using CollectionView -->
+                <CollectionView ItemsSource="{Binding PizzaList}" SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Your pizza item layout with enhanced styling -->
+                            <Frame CornerRadius="15" Margin="10" HasShadow="True" BackgroundColor="#fef8f7" HeightRequest="200">
+                                <FlexLayout Direction="Column" JustifyContent="Center" AlignItems="Center">
+                                    <!-- Pizza image -->
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" HeightRequest="100"/>
+
+                                    <!-- Pizza details -->
+                                    <StackLayout Margin="10,5,10,5" HorizontalOptions="Start">
+                                        <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" TextColor="#333333"/>
+                                        <Label Text="{Binding Price, StringFormat='{0:F2} DT'}" FontSize="Small" TextColor="#eb3229"/>
+                                    </StackLayout>
+                                </FlexLayout>
+
+                                <!-- Tap gesture recognizer on the entire pizza card -->
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPizzaCardTapped"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

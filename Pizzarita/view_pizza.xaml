@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pizzarita.view_pizza"
+             BackgroundColor="{StaticResource Primary}">
+    <Grid   BackgroundColor="#fff1ec">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+       
+
+
+        <!-- Content Section -->
+        <Grid Grid.Row="1" RowDefinitions="Auto, Auto">
+            <Path Data="M 211.5157012939453 506.2601013183594 L 211.5157012939453 154.91004943847656 L 652.75048828125 154.91004943847656 L 652.75048828125 500.3701171875 C 506.6836853027344 594.9873657226562 359.6053771972656 596.95068359375 211.5157012939453 506.2601013183594 Z "
+   Aspect="Fill" Fill="{StaticResource Primary}" Stroke="{StaticResource Primary}"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10">
+                <FlexLayout Direction="Column" JustifyContent="Center" HorizontalOptions="Center" Margin="0,5">
+                    <Image Source="{Binding ImageUrl}" WidthRequest="250" HeightRequest="250" Aspect="AspectFit"/>
+
+                    <Label Text="{Binding Name}" Margin="15,-10,0,0" FontSize="40" FontAttributes="Bold" TextColor="AntiqueWhite"/>
+                </FlexLayout>
+            </HorizontalStackLayout>
+        </Grid>
+
+
+
+
+        <Frame Grid.Row="2" HeightRequest="250" CornerRadius="20"
+       VerticalOptions="Center" HorizontalOptions="Center" Padding="0"
+       BorderColor="{x:Null}" Margin="10, 170, 10, 90">
+            <ScrollView>
+                <StackLayout Padding="5">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="10">
+                        <!-- Small Pizza -->
+                        <Grid>
+                            <Frame CornerRadius="10" BorderColor="{StaticResource Primary}" BackgroundColor="{Binding SmallPizzaColor}" Padding="10">
+                                <RadioButton x:Name="SmallPizzaRadioButton" Content="Small" IsChecked="{Binding IsSmallPizzaChecked}" GroupName="PizzaSize" CheckedChanged="OnPizzaSizeChanged" />
+                            </Frame>
+                            <Label Text="{Binding SmallPizzaPrice}" HorizontalOptions="Center" TextColor="{StaticResource Primary}" />
+                        </Grid>
+
+                        <!-- Medium Pizza -->
+                        <Grid>
+                            <Frame CornerRadius="10" BorderColor="{StaticResource Primary}" BackgroundColor="{Binding MediumPizzaColor}" Padding="10">
+                                <RadioButton x:Name="MediumPizzaRadioButton" Content="Medium" IsChecked="True" GroupName="PizzaSize" CheckedChanged="OnPizzaSizeChanged" />
+                            </Frame>
+                            <Label Text="{Binding MediumPizzaPrice}" HorizontalOptions="Center" TextColor="{StaticResource Primary}" />
+                        </Grid>
+
+                        <!-- Large Pizza -->
+                        <Grid>
+                            <Frame CornerRadius="10" BorderColor="{StaticResource Primary}" BackgroundColor="{Binding LargePizzaColor}" Padding="10">
+                                <RadioButton x:Name="LargePizzaRadioButton" Content="Large" IsChecked="{Binding IsLargePizzaChecked}" GroupName="PizzaSize" CheckedChanged="OnPizzaSizeChanged" />
+                            </Frame>
+                            <Label Text="{Binding LargePizzaPrice}" HorizontalOptions="Center" TextColor="{StaticResource Primary}" />
+                        </Grid>
+
+                    </StackLayout>
+
+                    <Label Text="{Binding Description}" FontSize="20" TextColor="Black" Margin="0, 10"/>
+                    <Label Text="{Binding Ingredients}" FontSize="16" FontAttributes="Italic" TextColor="Black" Margin="0, 5"/>
+                    <Label Text="{Binding Price, StringFormat='Price: {0:F2} DT'}" FontSize="18" FontAttributes="Bold" TextColor="Black" Margin="0, 5"/>
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+
+
+        <StackLayout Grid.Row="3" Orientation="Horizontal" Spacing="6" Margin="10">
+            <Button Text="Add to cart"
+        CornerRadius="10"
+        HeightRequest="55"
+        WidthRequest="230"
+        FontFamily="BarlowBold"
+        FontSize="22"
+        BackgroundColor="{StaticResource Primary}"
+        Clicked="OnAddToCartClicked" />
+
+            <Button Text="-"
+        CornerRadius="10"
+        HeightRequest="55"
+        FontSize="22"
+        FontFamily="BarlowBold"
+        BackgroundColor="{StaticResource Secondary}"
+        Clicked="OnMinusClicked" />
+
+            <Label x:Name="QuantityLabel"
+        Text="1"
+        FontSize="20"
+        VerticalOptions="Center"
+        HorizontalOptions="CenterAndExpand" />
+
+            <Button Text="+"
+        CornerRadius="10"
+        HeightRequest="55"
+        FontSize="22"
+        FontFamily="BarlowBold"
+        BackgroundColor="{StaticResource Secondary}"
+        Clicked="OnPlusClicked" />
+        </StackLayout>
+
+
+
+    </Grid>
+
+</ContentPage>
